@@ -1,0 +1,42 @@
+x-app: &app
+  build: .
+  image: detran-app          
+  environment:
+    MQTT_HOST: broker
+  depends_on:
+    broker:
+      condition: service_healthy
+  restart: unless-stopped
+
+services:
+  broker:
+    image: eclipse-mosquitto:2
+    volumes:
+      - ./broker/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+    ports:
+      - "1883:1883"
+    healthcheck:
+      test: ["CMD-SHELL", "mosquitto_pub -h localhost -t healthcheck -m ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mqtt-condutores:
+    <<: *app
+    command: python -u src/mqtt_condutores.py
+
+  mqtt-veiculos:
+    <<: *app
+    command: python -u src/mqtt_veiculos.py
+
+  mqtt-multas:
+    <<: *app
+    command: python -u src/mqtt_multas.py
+
+  cliente:
+    <<: *app
+    command: python -u src/cliente.py
+    profiles: ["client"]    
+    stdin_open: true
+    tty: true
+    restart: "no"
