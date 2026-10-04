@@ -112,12 +112,24 @@ def demo():
         ("Cadastrar condutores", "detran/condutores/cadastrar", {"cpf": "111", "nome": "Ana"}),
         (None, "detran/condutores/cadastrar", {"cpf": "222", "nome": "Bruno"}),
         (None, "detran/condutores/cadastrar", {"cpf": "333", "nome": "Carla"}),
+        (None, "detran/condutores/cadastrar", {"cpf": "444", "nome": "Diego"}),
+        (None, "detran/condutores/cadastrar", {"cpf": "555", "nome": "Elisa"}),
+        (None, "detran/condutores/cadastrar", {"cpf": "666", "nome": "Fábio"}),
+        (None, "detran/condutores/cadastrar", {"cpf": "777", "nome": "Gabi"}),
         ("Emplacar veículos", "detran/veiculos/emplacar",
          {"placa": "ABC1D23", "modelo": "Gol", "valor": 50000, "cpf": "111"}),
         (None, "detran/veiculos/emplacar",
          {"placa": "XYZ9K88", "modelo": "Civic", "valor": 120000, "cpf": "222", "ano": ano - 1}),
-        ("Emplacar com condutor inexistente (erro esperado)", "detran/veiculos/emplacar",
-         {"placa": "ERR0R00", "modelo": "Uno", "valor": 1000, "cpf": "999"}),
+        (None, "detran/veiculos/emplacar",
+         {"placa": "DEF4G56", "modelo": "Onix", "valor": 70000, "cpf": "444"}),
+        (None, "detran/veiculos/emplacar",
+         {"placa": "GHI7J89", "modelo": "HB20", "valor": 60000, "cpf": "555"}),
+        (None, "detran/veiculos/emplacar",
+         {"placa": "JKL0M12", "modelo": "Corolla", "valor": 130000, "cpf": "666"}),
+        (None, "detran/veiculos/emplacar",
+         {"placa": "MNO3P45", "modelo": "Mobi", "valor": 40000, "cpf": "777"}),
+        (None, "detran/veiculos/emplacar",
+         {"placa": "QWE1R23", "modelo": "Uno", "valor": 1000, "cpf": "999"}),
         ("IPVA de ABC1D23", "detran/veiculos/ipva", {"placa": "ABC1D23"}),
         ("Lançar multas", "detran/multas/lancar",
          {"ano": ano, "descricao": "Excesso de velocidade", "pontuacao": 5, "placa": "ABC1D23"}),
@@ -125,6 +137,14 @@ def demo():
          {"ano": ano, "descricao": "Farol apagado", "pontuacao": 3, "placa": "ABC1D23"}),
         (None, "detran/multas/lancar",
          {"ano": ano, "descricao": "Estacionar em local proibido", "pontuacao": 4, "placa": "XYZ9K88"}),
+        (None, "detran/multas/lancar",
+         {"ano": ano, "descricao": "Dirigir sem cinto", "pontuacao": 6, "placa": "DEF4G56"}),
+        (None, "detran/multas/lancar",
+         {"ano": ano, "descricao": "Ultrapassagem proibida", "pontuacao": 7, "placa": "GHI7J89"}),
+        (None, "detran/multas/lancar",
+         {"ano": ano, "descricao": "Uso de celular", "pontuacao": 3, "placa": "GHI7J89"}),
+        (None, "detran/multas/lancar",
+         {"ano": ano, "descricao": "Pneu careca", "pontuacao": 2, "placa": "JKL0M12"}),
         ("Transferir ABC1D23 para Carla (333)", "detran/veiculos/transferir",
          {"placa": "ABC1D23", "cpf": "333"}),
         ("Lançar multa após transferência", "detran/multas/lancar",
@@ -140,7 +160,6 @@ def demo():
             print(f"\n### {titulo}")
         print(f"-> {topic} {json.dumps(data, ensure_ascii=False)}")
         mostrar(call(topic, data))
-
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
